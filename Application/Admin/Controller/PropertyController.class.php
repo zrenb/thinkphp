@@ -1,17 +1,28 @@
 <?php
 namespace Admin\Controller;
 
+use Admin\Model\PropertyModel;
+use Think\Page;
+
 class PropertyController extends AdminController
 {
 
     public function index(){
         $pid = I('get.pid', 1);
         /* 获取频道列表 */
+       //分页
+        /*$property=M('Property');
+        $property->page(0,2)->select();*/
+        //数据总条数
+        $total=M('Property')->count();
+        $Page =new Page($total);
+        $show = $Page->show();
         $map  = array('status' => array('gt', -1), 'pid'=>$pid);
-        $list = M('Property')->where($map)->order('id asc')->select();
+        $list = M('Property')->where($map)->order('id asc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
         $this->assign('list', $list);
         $this->assign('pid', $pid);
+        $this->assign('page', $show);
         $this->meta_title = '物业管理';
         $this->display();
     }
@@ -24,14 +35,13 @@ class PropertyController extends AdminController
         if(IS_POST){
             $Property = D('Property');
             $data = $Property->create();
-            $Property->create_time=time();
             $Property->sn=rand(100000,999999);
             if($data){
                 $id = $Property->add();
                 if($id){
                     $this->success('新增成功', U('index'));
                     //记录行为
-                    action_log('update_channel', 'property', $id, UID);
+                    action_log('update_property', 'property', $id, UID);
                 } else {
                     $this->error('新增失败');
                 }

@@ -1,209 +1,107 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="UTF-8">
-<title><?php echo C('WEB_SITE_TITLE');?></title>
-<link href="/Public/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="/Public/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-<link href="/Public/static/bootstrap/css/docs.css" rel="stylesheet">
-<link href="/Public/static/bootstrap/css/onethink.css" rel="stylesheet">
+<?php if (!defined('THINK_PATH')) exit();?>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>jquery+html实现响应式后台登录界面</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-<script src="/Public/static/bootstrap/js/html5shiv.js"></script>
-<![endif]-->
+		<link rel="stylesheet" href="../../../../Public/Home/login/css/supersized.css">
+		<link rel="stylesheet" href="../../../../Public/Home/login/css/login.css">
+		<link href="../../../../Public/Home/login/css/bootstrap.min.css" rel="stylesheet">
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script src="../../../../Public/Home/login/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="../../../../Public/Home/login/js/jquery.form.js"></script>
+		<script type="text/javascript" src="../../../../Public/Home/login/js/tooltips.js"></script>
+		<script type="text/javascript" src="../../../../Public/Home/login/js/login.js"></script>
+	</head>
 
-<!--[if lt IE 9]>
-<script type="text/javascript" src="/Public/static/jquery-1.10.2.min.js"></script>
-<![endif]-->
-<!--[if gte IE 9]><!-->
-<script type="text/javascript" src="/Public/static/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="/Public/static/bootstrap/js/bootstrap.min.js"></script>
-<!--<![endif]-->
-<!-- 页面header钩子，一般用于加载插件CSS文件和代码 -->
-<?php echo hook('pageHeader');?>
+	<body>
+		<div class="page-container">
+			<div class="main_box">
+				<div class="login_box">
+					<div class="login_logo">
+						<img src="../../../../Public/Home/login/images/logo.png" >
+					</div>
+				
+					<div class="login_form">
+						<form action="index.html" id="login_form" method="post">
+							<div class="form-group">
+								<label for="/j_username" class="t">用户名：</label>
+								<input id="email" value="" name="username" type="text" class="form-control x319 in"
+								autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="/j_password" class="t">密　码：</label>
+								<input id="password" value="" name="password" type="password"
+								class="password form-control x319 in">
+							</div>
+							<div class="form-group">
+								<label for="j_captcha" class="t">验证码：</label>
+								 <input id="j_captcha" name="j_captcha" type="text" class="form-control x164 in">
+								<img id="captcha_img" alt="点击更换" title="点击更换" src="../../../../Public/Home/login/images/captcha.jpeg" class="m">
+							</div>
+							<div class="form-group">
+								<label class="t"></label>
+								<label for="j_remember" class="m">
+								<input id="j_remember" type="checkbox" value="true">&nbsp;记住登陆账号!</label>
+							</div>
+							<div class="form-group space">
+								<label class="t"></label>　　　
+								<button type="submit"  id="submit_btn"
+								class="btn btn-primary btn-lg">&nbsp;登&nbsp;录&nbsp </button>
+								<!--<button type="submit" class="btn">登 陆</button>-->
+								<input type="reset" value="&nbsp;重&nbsp;置&nbsp;" class="btn btn-default btn-lg">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="bottom">Copyright &copy; 2014 - 2015 <a href="#">系统登陆</a></div>
+			</div>
+		</div>
+		<script src="../../../../Public/Home/login/js/supersized.3.2.7.min.js"></script>
+		<script src="../../../../Public/Home/login/js/supersized-init.js"></script>
+		<script src="../../../../Public/Home/login/js/scripts.js"></script>
 
-</head>
-<body>
-	<!-- 头部 -->
-	<!-- 导航条
-================================================== -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="<?php echo U('index/index');?>">OneThink</a>
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <?php $__NAV__ = M('Channel')->field(true)->where("status=1")->order("sort")->select(); if(is_array($__NAV__)): $i = 0; $__LIST__ = $__NAV__;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$nav): $mod = ($i % 2 );++$i; if(($nav["pid"]) == "0"): ?><li>
-                            <a href="<?php echo (get_nav_url($nav["url"])); ?>" target="<?php if(($nav["target"]) == "1"): ?>_blank<?php else: ?>_self<?php endif; ?>"><?php echo ($nav["title"]); ?></a>
-                        </li><?php endif; endforeach; endif; else: echo "" ;endif; ?>
-                </ul>
-            </div>
-            <div class="nav-collapse collapse pull-right">
-                <?php if(is_login()): ?><ul class="nav" style="margin-right:0">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left:0;padding-right:0"><?php echo get_username();?> <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo U('User/profile');?>">修改密码</a></li>
-                                <li><a href="<?php echo U('User/logout');?>">退出</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                <?php else: ?>
-                    <ul class="nav" style="margin-right:0">
-                        <li>
-                            <a href="<?php echo U('User/login');?>">登录</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo U('User/register');?>" style="padding-left:0;padding-right:0">注册</a>
-                        </li>
-                    </ul><?php endif; ?>
-            </div>
-        </div>
-    </div>
-</div>
+		<script type="text/javascript">
 
-	<!-- /头部 -->
-	
-	<!-- 主体 -->
-	
-<header class="jumbotron subhead" id="overview">
-  <div class="container">
-    <h2>用户登录</h2>
-    <p><span><span class="pull-left"><span>还没有账号? <a href="<?php echo U('User/register');?>">立即注册</a></span> </span></p>
-  </div>
-</header>
-
-<div id="main-container" class="container">
-    <div class="row">
-         
-        
-<section>
-	<div class="span12">
-        <form class="login-form" action="/index.php?s=/Home/User/login.html" method="post">
-          <div class="control-group">
-            <label class="control-label" for="inputEmail">用户名</label>
-            <div class="controls">
-              <input type="text" id="inputEmail" class="span3" placeholder="请输入用户名"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="inputPassword">密码</label>
-            <div class="controls">
-              <input type="password" id="inputPassword"  class="span3" placeholder="请输入密码"  errormsg="密码为6-20位" nullmsg="请填写密码" datatype="*6-20" name="password">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label" for="inputPassword">验证码</label>
-            <div class="controls">
-              <input type="text" id="inputPassword" class="span3" placeholder="请输入验证码"  errormsg="请填写5位验证码" nullmsg="请填写验证码" datatype="*5-5" name="verify">
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label"></label>
-            <div class="controls">
-                <img class="verifyimg reloadverify" alt="点击切换" src="<?php echo U('verify');?>" style="cursor:pointer;">
-            </div>
-            <div class="controls Validform_checktip text-warning"></div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <label class="checkbox">
-                <input type="checkbox"> 自动登陆
-              </label>
-              <button type="submit" class="btn">登 陆</button>
-            </div>
-          </div>
-        </form>
-	</div>
-</section>
-
-    </div>
-</div>
-
-<script type="text/javascript">
-    $(function(){
-        $(window).resize(function(){
-            $("#main-container").css("min-height", $(window).height() - 343);
-        }).resize();
-    })
-</script>
-	<!-- /主体 -->
-
-	<!-- 底部 -->
-	
-    <!-- 底部
-    ================================================== -->
-    <footer class="footer">
-      <div class="container">
-          <p> 本站由 <strong><a href="http://www.onethink.cn" target="_blank">OneThink</a></strong> 强力驱动</p>
-      </div>
-    </footer>
-
-<script type="text/javascript">
-(function(){
-	var ThinkPHP = window.Think = {
-		"ROOT"   : "", //当前网站地址
-		"APP"    : "/index.php?s=", //当前项目地址
-		"PUBLIC" : "/Public", //项目公共目录地址
-		"DEEP"   : "<?php echo C('URL_PATHINFO_DEPR');?>", //PATHINFO分割符
-		"MODEL"  : ["<?php echo C('URL_MODEL');?>", "<?php echo C('URL_CASE_INSENSITIVE');?>", "<?php echo C('URL_HTML_SUFFIX');?>"],
-		"VAR"    : ["<?php echo C('VAR_MODULE');?>", "<?php echo C('VAR_CONTROLLER');?>", "<?php echo C('VAR_ACTION');?>"]
-	}
-})();
-</script>
-
-	<script type="text/javascript">
-
-    	$(document)
-	    	.ajaxStart(function(){
-	    		$("button:submit").addClass("log-in").attr("disabled", true);
-	    	})
-	    	.ajaxStop(function(){
-	    		$("button:submit").removeClass("log-in").attr("disabled", false);
-	    	});
+            $(document)
+                .ajaxStart(function(){
+                    $("button:submit").addClass("log-in").attr("disabled", true);
+                })
+                .ajaxStop(function(){
+                    $("button:submit").removeClass("log-in").attr("disabled", false);
+                });
 
 
-    	$("form").submit(function(){
-    		var self = $(this);
-    		$.post(self.attr("action"), self.serialize(), success, "json");
-    		return false;
+            $("form").submit(function(){
+                var self = $(this);
+                $.post(self.attr("action"), self.serialize(), success, "json");
+                return false;
 
-    		function success(data){
-    			if(data.status){
-    				window.location.href = data.url;
-    			} else {
-    				self.find(".Validform_checktip").text(data.info);
-    				//刷新验证码
-    				$(".reloadverify").click();
-    			}
-    		}
-    	});
-
-		$(function(){
-			var verifyimg = $(".verifyimg").attr("src");
-            $(".reloadverify").click(function(){
-                if( verifyimg.indexOf('?')>0){
-                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
-                }else{
-                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                function success(data){
+                    if(data.status){
+                        window.location.href = data.url;
+                    } else {
+                        self.find(".Validform_checktip").text(data.info);
+                        //刷新验证码
+                        $(".reloadverify").click();
+                    }
                 }
             });
-		});
-	</script>
- <!-- 用于加载js代码 -->
-<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
-<?php echo hook('pageFooter', 'widget');?>
-<div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
-	
-</div>
 
-	<!-- /底部 -->
-</body>
+            $(function(){
+                var verifyimg = $(".verifyimg").attr("src");
+                $(".reloadverify").click(function(){
+                    if( verifyimg.indexOf('?')>0){
+                        $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                    }else{
+                        $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                    }
+                });
+            });
+	</body>
 </html>

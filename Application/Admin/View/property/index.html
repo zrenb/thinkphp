@@ -32,7 +32,7 @@
                     <th>地址</th>
                     <th>电话</th>
                     <th>维修时间</th>
-                    <th>status</th>
+                    <th>问题</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -47,8 +47,8 @@
                             </td>
                             <td>{$property.address}</td>
                             <td>{$property.tel}</td>
-                            <td>{$property.create_time}</td>
-                            <td>{$property.status}</td>
+                            <td><?php echo date("Y-m-d H:i:s",$property['create_time']);?></td>
+                            <td>{$property.prob}</td>
                             <!--<td>
                                 <a href="{:U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)))}" class="ajax-get">
                                     {$menu.is_dev_text}
@@ -61,6 +61,7 @@
                             </td>-->
                             <td>
                                 <a title="编辑" href="{:U('edit?id='.$property['id'])}">编辑</a>
+                                <a href="{:U('setStatus?ids='.$property['id'].'&status='.abs(1-$property['status']))}" class="ajax-get">{$property.status|show_status_op}</a>
                                 <a class="confirm <!--ajax-get-->" title="删除" href="{:U('del?id='.$property['id'])}">删除</a>
                             </td>
                         </tr>
@@ -73,7 +74,7 @@
         </form>
         <!-- 分页 -->
         <div class="page">
-
+            {$page}
         </div>
     </div>
 </block>

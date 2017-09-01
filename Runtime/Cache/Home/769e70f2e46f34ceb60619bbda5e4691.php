@@ -28,6 +28,7 @@
 	<!-- 头部 -->
 	<!-- 导航条
 ================================================== -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">

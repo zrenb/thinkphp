@@ -98,7 +98,7 @@
         <div class="search-form fr cf">
             <div class="sleft">
                 <input type="text" name="title" class="search-input" value="<?php echo I('title');?>" placeholder="请输入菜单名称">
-                <a class="sch-btn" href="javascript:;" id="search" url="/admin.php?s=/property/index.html"><i class="btn-search"></i></a>
+                <a class="sch-btn" href="javascript:;" id="search" url="/admin.php?s=/property/index"><i class="btn-search"></i></a>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                     <th>地址</th>
                     <th>电话</th>
                     <th>维修时间</th>
-                    <th>status</th>
+                    <th>问题</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -129,8 +129,8 @@
                             </td>
                             <td><?php echo ($property["address"]); ?></td>
                             <td><?php echo ($property["tel"]); ?></td>
-                            <td><?php echo ($property["create_time"]); ?></td>
-                            <td><?php echo ($property["status"]); ?></td>
+                            <td><?php echo date("Y-m-d H:i:s",$property['create_time']);?></td>
+                            <td><?php echo ($property["prob"]); ?></td>
                             <!--<td>
                                 <a href="<?php echo U('toogleDev',array('id'=>$menu['id'],'value'=>abs($menu['is_dev']-1)));?>" class="ajax-get">
                                     <?php echo ($menu["is_dev_text"]); ?>
@@ -143,6 +143,7 @@
                             </td>-->
                             <td>
                                 <a title="编辑" href="<?php echo U('edit?id='.$property['id']);?>">编辑</a>
+                                <a href="<?php echo U('setStatus?ids='.$property['id'].'&status='.abs(1-$property['status']));?>" class="ajax-get"><?php echo (show_status_op($property["status"])); ?></a>
                                 <a class="confirm <!--ajax-get-->" title="删除" href="<?php echo U('del?id='.$property['id']);?>">删除</a>
                             </td>
                         </tr><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -153,7 +154,7 @@
         </form>
         <!-- 分页 -->
         <div class="page">
-
+            <?php echo ($page); ?>
         </div>
     </div>
 

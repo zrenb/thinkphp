@@ -111,20 +111,21 @@
             <label class="item-label">问题<span class="check-tips">（所属的上级菜单）</span></label>
             <textarea name="prob" width="100" height="10" ><?php echo ((isset($info["prob"]) && ($info["prob"] !== ""))?($info["prob"]):''); ?></textarea>
         </div>
-        <div class="form-item">
+       <!-- <div class="form-item">
             <label class="item-label">状态<span class="check-tips">（用于左侧分组二级菜单）</span></label>
             <div class="controls">
                 <input type="text" class="text input-large" name="status" value="<?php echo ((isset($info["status"]) && ($info["status"] !== ""))?($info["status"]):''); ?>">
             </div>
-        </div>
+        </div>-->
        <!-- <div class="form-item">
             <label class="item-label">是否隐藏<span class="check-tips"></span></label>
             <div class="controls">
-                <label class="radio"><input type="radio" name="hide" value="1">是</label>
-                <label class="radio"><input type="radio" name="hide" value="0">否</label>
+                <label class="radio"><input type="radio" name="status" value="1">待处理</label>
+                <label class="radio"><input type="radio" name="status" value="0">处理中</label>
+                <label class="radio"><input type="radio" name="status" value="0">处理完成</label>
             </div>
-        </div>
-        <div class="form-item">
+        </div>-->
+       <!-- <div class="form-item">
             <label class="item-label">仅开发者模式可见<span class="check-tips"></span></label>
             <div class="controls">
                 <label class="radio"><input type="radio" name="is_dev" value="1">是</label>
